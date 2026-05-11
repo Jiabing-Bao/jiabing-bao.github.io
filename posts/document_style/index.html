@@ -17,26 +17,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>Hello World - Jiabing-Bao</title>
+  <title>配置文件常见格式及其用途(Edit by HNU BJB) - Jiabing-Bao</title>
 
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+    <meta name="description" content="一. 绪论 等学习补充后介绍为什么要会这些格式，哪些地方要用 二. XML 文件格式 XML 是一种数据保存和交换的文件格式。在深度学习中，XML 常用于标记目标位置和精确度；在 HMI 中，常见配置文件也常采用 XML 格式。 2.1 XML 的组成 2.1.1 XML 声明 XML 第一行通常是声明，包含以下属性：  version：说明当前 XML 文件版本号，必选。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://localhost:4000/posts/hello-world/">
+<meta property="og:title" content="配置文件常见格式及其用途(Edit by HNU BJB)">
+<meta property="og:url" content="http://localhost:4000/posts/document_style/">
 <meta property="og:site_name" content="Jiabing-Bao">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="一. 绪论 等学习补充后介绍为什么要会这些格式，哪些地方要用 二. XML 文件格式 XML 是一种数据保存和交换的文件格式。在深度学习中，XML 常用于标记目标位置和精确度；在 HMI 中，常见配置文件也常采用 XML 格式。 2.1 XML 的组成 2.1.1 XML 声明 XML 第一行通常是声明，包含以下属性：  version：说明当前 XML 文件版本号，必选。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://localhost:4000/assets/avatar.webp">
-<meta property="article:published_time" content="2026-05-10T10:21:18.801Z">
-<meta property="article:modified_time" content="2026-05-10T10:21:18.802Z">
+<meta property="article:published_time" content="2026-05-11T09:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-11T07:49:58.392Z">
 <meta property="article:author" content="Jiabing-Bao">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="JSON">
+<meta property="article:tag" content="XML">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="软件设计">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://localhost:4000/assets/avatar.webp">
   
   
   
-  
+  <meta name="keywords" content="嵌入式,C语言,软件设计,XML,JSON">
 
   <!-- feed -->
   
@@ -50,7 +55,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Jiabing-Bao","sameAs":[],"image":"/assets/avatar.webp"},"dateCreated":"2026-05-10T18:21:18+08:00","dateModified":"2026-05-10T18:21:18+08:00","datePublished":"2026-05-10T18:21:18+08:00","description":"","headline":"Hello World","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/hello-world/"},"publisher":{"@type":"Organization","name":"Jiabing-Bao","sameAs":[],"image":"/assets/avatar.webp","logo":{"@type":"ImageObject","url":"/assets/avatar.webp"}},"url":"http://localhost:4000/posts/hello-world/","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Jiabing-Bao","sameAs":[],"image":"/assets/avatar.webp"},"dateCreated":"2026-05-11T17:00:00+08:00","dateModified":"2026-05-11T15:49:58+08:00","datePublished":"2026-05-11T17:00:00+08:00","description":"","headline":"配置文件常见格式及其用途(Edit by HNU BJB)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/document_style/"},"publisher":{"@type":"Organization","name":"Jiabing-Bao","sameAs":[],"image":"/assets/avatar.webp","logo":{"@type":"ImageObject","url":"/assets/avatar.webp"}},"url":"http://localhost:4000/posts/document_style/","keywords":"嵌入式, C语言, 软件设计, XML, JSON","image":[]}</script>
   <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
@@ -81,41 +86,216 @@
 <div class="article banner top">
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
-<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-05-10T10:21:18.801Z">2026-05-10</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-05-10T10:21:18.802Z">2026-05-10</time></span></div></div></div>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">嵌入式软件开发</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-05-11T09:00:00.000Z">2026-05-11</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-05-11T07:49:58.392Z">2026-05-11</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>Hello World</span></h1>
+        <h1 class="text title"><span>配置文件常见格式及其用途(Edit by HNU BJB)</span></h1>
         
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+  </div><article class="md-text content"><h2 id="一.-绪论">一. 绪论</h2>
+<p>等学习补充后介绍为什么要会这些格式，哪些地方要用</p>
+<h2 id="二.-xml-文件格式">二. XML 文件格式</h2>
+<p>XML 是一种数据保存和交换的文件格式。在深度学习中，XML
+常用于标记目标位置和精确度；在 HMI 中，常见配置文件也常采用 XML
+格式。</p>
+<h3 id="xml-的组成">2.1 XML 的组成</h3>
+<h4 id="xml-声明">2.1.1 XML 声明</h4>
+<p>XML 第一行通常是声明，包含以下属性：</p>
+<ul>
+<li><code>version</code>：说明当前 XML 文件版本号，必选。</li>
+<li><code>encoding</code>：说明当前 XML
+文档使用的字符编码集，可选，默认是 UTF-8。</li>
+<li><code>standalone</code>：说明当前 XML
+文档是否为独立文档，可选，默认是 <code>yes</code>。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> standalone=<span class="string">&quot;no&quot;</span>?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果当前 XML 文档实际使用 GB2312 编码，但 <code>encoding</code> 写成
+UTF-8，解析时可能出错。</p>
+<h4 id="xml-元素">2.1.2 XML 元素</h4>
+<p>XML 声明后面的内容均为元素，元素可以嵌套。</p>
+<p>一个元素的基本格式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">标记名称</span>&gt;</span>内容<span class="tag">&lt;/<span class="name">标记名称</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><code>&lt;标记名称&gt;</code> 是起始标记；</li>
+<li><code>&lt;/标记名称&gt;</code> 是结束标记；</li>
+<li>最外层标记称为根元素，根元素有且只能有一个。</li>
+</ul>
+<h4 id="xml-属性">2.1.3 XML 属性</h4>
+<p>标记后可以跟多个属性。属性包含属性名和属性值，中间用 <code>=</code>
+连接，属性值需要使用双引号。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">标记名称</span> <span class="attr">属性名1</span>=<span class="string">&quot;属性值1&quot;</span> <span class="attr">属性名2</span>=<span class="string">&quot;属性值2&quot;</span>&gt;</span>内容<span class="tag">&lt;/<span class="name">标记名称</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>简写格式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">标记名称</span> <span class="attr">属性名1</span>=<span class="string">&quot;属性值1&quot;</span> <span class="attr">属性名2</span>=<span class="string">&quot;属性值2&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="xml-示例">2.1.4 XML 示例</h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> standalone=<span class="string">&quot;no&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">teacher</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">teacher</span> <span class="attr">number</span>=<span class="string">&quot;1001&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>WuSi<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">age</span>&gt;</span>24<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sex</span>&gt;</span>male<span class="tag">&lt;/<span class="name">sex</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">teacher</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">teacher</span> <span class="attr">number</span>=<span class="string">&quot;1002&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>SanDe<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">age</span>&gt;</span>26<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sex</span>&gt;</span>female<span class="tag">&lt;/<span class="name">sex</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">teacher</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">teacher</span> <span class="attr">number</span>=<span class="string">&quot;1003&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>BaiDu<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">age</span>&gt;</span>43<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sex</span>&gt;</span>male<span class="tag">&lt;/<span class="name">sex</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">teacher</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">teacher</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="xml-的语法">2.2 XML 的语法</h3>
+<h4 id="xml-元素命名规则">2.2.1 XML 元素命名规则</h4>
+<ul>
+<li>名称可以包含字母、数字以及其他字符；</li>
+<li>名称不能以数字或标点符号开始；</li>
+<li>名称不能以 <code>xml</code>、<code>XML</code>、<code>Xml</code>
+等字符开始；</li>
+<li>名称不能包含空格；</li>
+<li>可以使用任意名称，没有保留字；</li>
+<li>所有对象都区分大小写。</li>
+</ul>
+<h4 id="注释">2.2.2 注释</h4>
+<p>XML 注释格式如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 这里是注释 --&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="实体引用字符">2.2.3 实体引用字符</h4>
+<p>实体引用用于 XML
+文档中的特殊字符，否则这些字符会被解释为元素组成部分。</p>
+<table>
+<thead>
+<tr>
+<th>引用字符名</th>
+<th>符号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&amp;lt;</code></td>
+<td><code>&lt;</code></td>
+<td>小于</td>
+</tr>
+<tr>
+<td><code>&amp;gt;</code></td>
+<td><code>&gt;</code></td>
+<td>大于</td>
+</tr>
+<tr>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>和号</td>
+</tr>
+<tr>
+<td><code>&amp;apos;</code></td>
+<td><code>'</code></td>
+<td>单引号</td>
+</tr>
+<tr>
+<td><code>&amp;quot;</code></td>
+<td><code>"</code></td>
+<td>引号</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cdata">2.2.4 CDATA</h4>
+<p>CDATA 中的所有文本不会被 XML 处理器解释，而会直接显示。CDATA 段中出现
+<code>&lt;</code>、<code>&gt;</code>、<code>"</code>、<code>'</code>、<code>&amp;</code>
+时，无需使用转义字符。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;![CDATA[文本内容]]&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="处理指令">2.2.5 处理指令</h4>
+<p>处理指令用于给处理 XML 文件的应用程序提供信息。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?处理指令名字 处理指令信息?&gt;</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="第三章json-文件格式">第三章：JSON 文件格式</h2>
+<p>JSON 是一种基于文本的数据交换格式，源于 JavaScript
+语言，但设计目标是独立于语言。</p>
+<p>目前几乎所有主流编程语言都支持 JSON。它常用于数据存储和网络传输，例如
+VSCode 工程项目中的配置文件。</p>
+<p>JSON 由两种基本数据结构组成：</p>
+<ul>
+<li>对象：键值对集合；</li>
+<li>数组：有序值集合。</li>
+</ul>
+<h3 id="json-语法">3.1 JSON 语法</h3>
+<h4 id="对象">3.1.1 对象</h4>
+<p>对象使用花括号 <code>{}</code> 表示，内部是多个键值对集合。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Alice&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">25</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;isStudent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组">3.1.2 数组</h4>
+<p>数组使用方括号 <code>[]</code> 表示，内部是按顺序排列的多个值。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="string">&quot;Apple&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&quot;Banana&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&quot;Cherry&quot;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+<h4 id="键值对">3.1.3 键值对</h4>
+<p>键值对由键和值组成，键必须是字符串，值可以是任意合法 JSON 类型。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;value&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="数据类型">3.1.4 数据类型</h4>
+<p>JSON 常见数据类型包括：</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字符串 String</td>
+<td><code>"Hello World"</code></td>
+</tr>
+<tr>
+<td>数字 Number</td>
+<td><code>42</code>、<code>3.14</code></td>
+</tr>
+<tr>
+<td>布尔值 Boolean</td>
+<td><code>true</code>、<code>false</code></td>
+</tr>
+<tr>
+<td>数组 Array</td>
+<td><code>[1, 2, 3]</code></td>
+</tr>
+<tr>
+<td>对象 Object</td>
+<td><code>{"key": "value"}</code></td>
+</tr>
+<tr>
+<td>空值 null</td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="vscode-的-json-配置">3.2 VSCode 的 JSON 配置</h3>
+<p>VSCode 一个工程通常包含 <code>tasks.json</code> 和
+<code>launch.json</code> 两个配置文件。</p>
+<h4 id="tasks.json">3.2.1 tasks.json</h4>
+<p><code>tasks.json</code>
+用于自动化构建任务，包含编译、运行环境等配置。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;$&#123;fileDirname&#125;\\bin\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-Wall&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-static-libgcc&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-fexec-charset=GBK&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-std=c11&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;kind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;isDefault&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;presentation&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;echo&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reveal&quot;</span><span class="punctuation">:</span> <span class="string">&quot;always&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;focus&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;panel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;new&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$gcc&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;run&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;\\bin\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;kind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;test&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;isDefault&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;presentation&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;echo&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reveal&quot;</span><span class="punctuation">:</span> <span class="string">&quot;always&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;focus&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;panel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;new&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>字段说明：</p>
+<ul>
+<li><code>label</code>：任务名称，可以更改，但不建议频繁改。</li>
+<li><code>type</code>：任务类型，<code>shell</code> 表示先打开 shell
+再输入命令。</li>
+<li><code>command</code>：执行命令，这里是 <code>gcc</code>。</li>
+<li><code>args</code>：传给编译命令的一系列参数。</li>
+<li><code>group</code>：任务分组。</li>
+<li><code>presentation</code>：任务执行时的终端显示设置。</li>
+<li><code>problemMatcher</code>：捕捉编译器报错信息，并显示到 VSCode
+的“问题”面板。</li>
+<li><code>dependsOn</code>：任务依赖。例如运行前必须先构建。</li>
+</ul>
+<h4 id="launch.json">3.2.2 launch.json</h4>
+<p><code>launch.json</code>
+用于调试程序，包含调试器、程序入口等配置信息。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;\\bin\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;internalConsoleOptions&quot;</span><span class="punctuation">:</span> <span class="string">&quot;neverOpen&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\Program Files\\mingw64\\bin\\gdb.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>字段说明：</p>
+<ul>
+<li><code>name</code>：调试配置名称。</li>
+<li><code>type</code>：调试类型，<code>cppdbg</code> 对应 C/C++
+调试插件。</li>
+<li><code>request</code>：请求配置类型，可为 <code>launch</code> 或
+<code>attach</code>。</li>
+<li><code>program</code>：要调试的程序路径。</li>
+<li><code>args</code>：调试时传递给程序的命令行参数。</li>
+<li><code>stopAtEntry</code>：是否在程序入口暂停。</li>
+<li><code>cwd</code>：调试工作目录。</li>
+<li><code>externalConsole</code>：是否使用外部控制台。</li>
+<li><code>MIMode</code>：指定调试器类型，这里是 <code>gdb</code>。</li>
+<li><code>miDebuggerPath</code>：指定 <code>gdb.exe</code>
+路径，需要根据自己的 MinGW 安装位置修改。</li>
+<li><code>preLaunchTask</code>：调试前执行的构建任务，需与
+<code>tasks.json</code> 中的 <code>label</code> 对应。</li>
+</ul>
 </article>
 <div class="article-footer">
     <section id="license">
@@ -129,7 +309,7 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/posts/OneCameraCalibrate/">单目相移法三维成像原理(Edit by HNU BJB)</a></div><div class="item" id="next"></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/embedded-software-design-notes-september/">嵌入式软件设计方法学习笔记(Edit by HNU BJB)</a></div></section></div>
 
 
 
@@ -145,7 +325,7 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#quick-start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80.-%E7%BB%AA%E8%AE%BA"><span class="toc-text">一. 绪论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C.-xml-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">二. XML 文件格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xml-%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">2.1 XML 的组成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#xml-%E5%A3%B0%E6%98%8E"><span class="toc-text">2.1.1 XML 声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xml-%E5%85%83%E7%B4%A0"><span class="toc-text">2.1.2 XML 元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xml-%E5%B1%9E%E6%80%A7"><span class="toc-text">2.1.3 XML 属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xml-%E7%A4%BA%E4%BE%8B"><span class="toc-text">2.1.4 XML 示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xml-%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-text">2.2 XML 的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#xml-%E5%85%83%E7%B4%A0%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="toc-text">2.2.1 XML 元素命名规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-text">2.2.2 注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E5%BC%95%E7%94%A8%E5%AD%97%E7%AC%A6"><span class="toc-text">2.2.3 实体引用字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cdata"><span class="toc-text">2.2.4 CDATA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4"><span class="toc-text">2.2.5 处理指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0json-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">第三章：JSON 文件格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#json-%E8%AF%AD%E6%B3%95"><span class="toc-text">3.1 JSON 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1"><span class="toc-text">3.1.1 对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-text">3.1.2 数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-text">3.1.3 键值对</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">3.1.4 数据类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vscode-%E7%9A%84-json-%E9%85%8D%E7%BD%AE"><span class="toc-text">3.2 VSCode 的 JSON 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tasks.json"><span class="toc-text">3.2.1 tasks.json</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#launch.json"><span class="toc-text">3.2.2 launch.json</span></a></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>

@@ -1,0 +1,1054 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.2">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>嵌入式软件设计方法学习笔记(Edit by HNU BJB) - Jiabing-Bao</title>
+
+  
+    <meta name="description" content="本文根据《嵌入式软件设计方法学习笔记（C语言，edit by EPRI bjb，9月版）》整理为 Hexo 可直接使用的 Markdown 版本。 原笔记重点：提取各章节核心概念，并用简短代码辅助理解。9月版主要补充第 4-6 章内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式软件设计方法学习笔记(Edit by HNU BJB)">
+<meta property="og:url" content="http://localhost:4000/posts/embedded-software-design-notes-september/">
+<meta property="og:site_name" content="Jiabing-Bao">
+<meta property="og:description" content="本文根据《嵌入式软件设计方法学习笔记（C语言，edit by EPRI bjb，9月版）》整理为 Hexo 可直接使用的 Markdown 版本。 原笔记重点：提取各章节核心概念，并用简短代码辅助理解。9月版主要补充第 4-6 章内容。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://localhost:4000/assets/avatar.webp">
+<meta property="article:published_time" content="2026-05-11T08:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-11T07:48:19.358Z">
+<meta property="article:author" content="Jiabing-Bao">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="JSON">
+<meta property="article:tag" content="SOLID">
+<meta property="article:tag" content="XML">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="软件设计">
+<meta property="article:tag" content="面向对象">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://localhost:4000/assets/avatar.webp">
+  
+  
+  
+  <meta name="keywords" content="嵌入式,C语言,软件设计,XML,JSON,面向对象,SOLID">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/assets/avatar.webp">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Jiabing-Bao","sameAs":[],"image":"/assets/avatar.webp"},"dateCreated":"2026-05-11T16:00:00+08:00","dateModified":"2026-05-11T15:48:19+08:00","datePublished":"2026-05-11T16:00:00+08:00","description":"\r\n本文根据《嵌入式软件设计方法学习笔记（C语言，edit by EPRI\r\nbjb，9月版）》整理为 Hexo 可直接使用的 Markdown 版本。\r\n原笔记重点：提取各章节核心概念，并用简短代码辅助理解。9月版主要补充第\r\n4-6 章内容。\r\n","headline":"嵌入式软件设计方法学习笔记(Edit by HNU BJB)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/embedded-software-design-notes-september/"},"publisher":{"@type":"Organization","name":"Jiabing-Bao","sameAs":[],"image":"/assets/avatar.webp","logo":{"@type":"ImageObject","url":"/assets/avatar.webp"}},"url":"http://localhost:4000/posts/embedded-software-design-notes-september/","keywords":"嵌入式, C语言, 软件设计, XML, JSON, 面向对象, SOLID","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/assets/avatar.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Jiabing-Bao</div><div class="sub cap">Ph.D. in Electronic Information</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="文档" href="/wiki/" style="color:#3DC550"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.936.936 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.958.958 0 0 0 .783-.073a.936.936 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031c.113-.005.224-.01.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371c.184-.107.377-.216.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"/><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8.2 8.2 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.13 1.13 0 0 1 .492-.13c.047 0 .094.004.138.01c.175.029.315.1.354.12l.009.005l.749.356V3.647z"/><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"/><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"/></svg></a><a class="nav-item" title="时刻" href="/moments/" style="color:#FA6400"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a><a class="nav-item" title="更多" href="/about/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/posts/document_style/"><span class="title">配置文件常见格式及其用途(Edit by HNU BJB)</span></a><a class="item title" href="/posts/embedded-software-design-notes-september/"><span class="title">嵌入式软件设计方法学习笔记(Edit by HNU BJB)</span></a><a class="item title" href="/posts/FundamentalsOfDeepLearning/"><span class="title">深度学习网络结构基础(Edit by HNU BJB)</span></a><a class="item title" href="/posts/OneCameraCalibrate/"><span class="title">单目相移法三维成像原理(Edit by HNU BJB)</span></a><a class="item title" href="/posts/hello-world/"><span class="title">Hello World</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/Jiabing-Bao" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://api.iconify.design/mdi:github.svg"/></a><a class="social" onclick="switchTheme()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">嵌入式软件开发</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-05-11T08:00:00.000Z">2026-05-11</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-05-11T07:48:19.358Z">2026-05-11</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>嵌入式软件设计方法学习笔记(Edit by HNU BJB)</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><blockquote>
+<p>本文根据《嵌入式软件设计方法学习笔记（C语言，edit by EPRI
+bjb，9月版）》整理为 Hexo 可直接使用的 Markdown 版本。<br />
+原笔记重点：提取各章节核心概念，并用简短代码辅助理解。9月版主要补充第
+4-6 章内容。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="第一章面向对象编程">第一章：面向对象编程</h2>
+<h3 id="基础概念">1.1 基础概念</h3>
+<p><strong>对象</strong>：数据与函数的组合，由一组描述对象状态的数据和一组对象支持操作的函数构成。在
+C++ 中，对象通常具有封装、继承和多态三个核心特性。</p>
+<p><strong>类</strong>：最常见的对象实现方式，包含属性和方法。属性可以理解为结构体成员、参数等；方法可以理解为针对对象进行操作的函数。</p>
+<p><strong>UML 类图</strong>：用于描述类与类之间关系的结构图。在
+Markdown 中，可以使用 Mermaid 实现简单的类图。</p>
+<h3 id="三大特性">1.2 三大特性</h3>
+<h4 id="封装">1.2.1 封装</h4>
+<p><strong>封装</strong>：将属性和方法封装起来，属性只能通过对外提供的方法访问，内部实现细节对外不可见。</p>
+<p>在 C
+语言中，常见封装方式是将头文件和实现文件分开：头文件只暴露结构体名、函数名和必要参数，不暴露内部成员。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __STACK_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __STACK_H</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 只声明结构体名、函数名及必要参数，不暴露内部实现</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stack</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="built_in">stack</span> *<span class="title function_">stack_create</span><span class="params">(<span class="type">int</span> size)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stack.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 c 文件中定义结构体内部成员</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stack</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> top;</span><br><span class="line">    <span class="type">int</span> *p_buf;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> size;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 c 文件中实现函数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="built_in">stack</span> *<span class="title function_">stack_create</span><span class="params">(<span class="type">int</span> size)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stack</span> *<span class="title">p_stack</span> =</span> (<span class="keyword">struct</span> <span class="built_in">stack</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> <span class="built_in">stack</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (p_stack != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        p_stack-&gt;top = <span class="number">0</span>;</span><br><span class="line">        p_stack-&gt;size = size;</span><br><span class="line">        p_stack-&gt;p_buf = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * size);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (p_stack-&gt;p_buf == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="built_in">free</span>(p_stack);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> p_stack;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="继承">1.2.2 继承</h4>
+<p><strong>继承</strong>：定义一个子类，继承父类的属性和方法，并在此基础上扩展。</p>
+<p>在 C 语言中，可以通过在子结构体中包含父结构体对象的方式模拟继承。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __STACK_NAMED_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __STACK_NAMED_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stack.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*************************************************************************************</span></span><br><span class="line"><span class="comment">** 目的：C 语言定义子类的方式</span></span><br><span class="line"><span class="comment">** 步骤1：定义基类对象</span></span><br><span class="line"><span class="comment">** 步骤2：定义扩展项</span></span><br><span class="line"><span class="comment">*************************************************************************************/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stack_named</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stack</span> <span class="title">super</span>;</span>      <span class="comment">// 定义基类对象</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *p_name;      <span class="comment">// 扩展项</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">stack_named_init</span><span class="params">(<span class="keyword">struct</span> stack_named *p_stack, <span class="type">int</span> *p_buf, <span class="type">int</span> size, <span class="type">const</span> <span class="type">char</span> *p_name)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stack_named.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*************************************************************************************</span></span><br><span class="line"><span class="comment">** 目的：子类函数的新函数实现</span></span><br><span class="line"><span class="comment">** 步骤1：初始化基类对象</span></span><br><span class="line"><span class="comment">** 步骤2：初始化扩展项</span></span><br><span class="line"><span class="comment">*************************************************************************************/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">stack_named_init</span><span class="params">(<span class="keyword">struct</span> stack_named *p_stack, <span class="type">int</span> *p_buf, <span class="type">int</span> size, <span class="type">const</span> <span class="type">char</span> *p_name)</span> &#123;</span><br><span class="line">    <span class="comment">// stack_init 函数需要传入 struct stack 指针对象</span></span><br><span class="line">    <span class="comment">// 一般先取出父类地址再传递</span></span><br><span class="line">    stack_init(&amp;p_stack-&gt;super, p_buf, size);</span><br><span class="line"></span><br><span class="line">    p_stack-&gt;p_name = p_name;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="多态">1.2.3 多态</h4>
+<p><strong>多态</strong>：针对不同对象，相同函数具有不同实现。在 C
+语言中，常通过函数指针和 <code>void *</code> 泛型指针实现。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __STACK_TEST_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __STACK_TEST_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stack.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stack_named.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*************************************************************************************</span></span><br><span class="line"><span class="comment">** 目的：C 语言实现多态的方式</span></span><br><span class="line"><span class="comment">** 步骤1：定义函数指针，注意函数指针必须统一传参和返回值</span></span><br><span class="line"><span class="comment">** 步骤2：定义传参和返回值相同的不同初始化函数</span></span><br><span class="line"><span class="comment">** 步骤3：定义接口函数，选择对应函数</span></span><br><span class="line"><span class="comment">*************************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数指针定义</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="title function_">int</span> <span class="params">(*stack_init_fun)</span><span class="params">(<span class="type">void</span> *self, <span class="type">int</span> *buf, <span class="type">int</span> size, <span class="type">const</span> <span class="type">char</span> *name)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义基类初始化函数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">base_stack_init</span><span class="params">(<span class="type">void</span> *self, <span class="type">int</span> *buf, <span class="type">int</span> size, <span class="type">const</span> <span class="type">char</span> *name)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stack</span> *<span class="title">stack_obj</span> =</span> (<span class="keyword">struct</span> <span class="built_in">stack</span> *)self;</span><br><span class="line">    <span class="keyword">return</span> stack_init(stack_obj, buf, size); <span class="comment">// 忽略 name</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重新定义 stack_named 类的初始化函数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">stack_named_init_poly</span><span class="params">(<span class="type">void</span> *self, <span class="type">int</span> *buf, <span class="type">int</span> size, <span class="type">const</span> <span class="type">char</span> *name)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stack_named</span> *<span class="title">named_obj</span> =</span> (<span class="keyword">struct</span> stack_named *)self;</span><br><span class="line">    <span class="type">int</span> result = stack_init(&amp;named_obj-&gt;super, buf, size);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (result == <span class="number">0</span> &amp;&amp; name != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        named_obj-&gt;p_name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 统一接口函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">stack_init_inter</span><span class="params">(<span class="type">void</span> *self, <span class="type">int</span> *buf, <span class="type">int</span> size, <span class="type">const</span> <span class="type">char</span> *name, stack_init_fun stack_init)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (stack_init) &#123;</span><br><span class="line">        stack_init(self, buf, size, name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stack_test.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stack</span> <span class="title">p_base</span> =</span> &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stack_named</span> <span class="title">p_name</span> =</span> &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> buf[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="type">int</span> size = <span class="number">1024</span>;</span><br><span class="line">    <span class="type">char</span> *name = <span class="string">&quot;stack&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// p_base 初始化，调用 base_stack_init 函数</span></span><br><span class="line">    stack_init_inter(&amp;p_base, buf, size, name, base_stack_init);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// p_name 初始化，调用 stack_named_init_poly 函数</span></span><br><span class="line">    stack_init_inter(&amp;p_name, buf, size, name, stack_named_init_poly);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="基本编程原则">1.3 基本编程原则</h3>
+<h4 id="内存分配-对象创建">1.3.1 内存分配 / 对象创建</h4>
+<p>对象创建需要进行内存分配和初始化。常见内存分配方式如下：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>内存分配方式</th>
+<th>分配方式</th>
+<th>生命周期</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>动态内存分配</td>
+<td><code>malloc</code> 手动分配，<code>free</code> 手动释放</td>
+<td>手动控制</td>
+<td>存于堆内存，适合存储较大数据；内存在运行期确定，能减少数组越界带来的内存溢出问题</td>
+<td><code>free</code> 遗漏会造成内存泄漏；初始化 /
+反初始化资源消耗较多</td>
+</tr>
+<tr>
+<td>静态内存分配</td>
+<td>全局变量和 <code>static</code> 指定静态变量自动分配释放</td>
+<td>整个程序运行期</td>
+<td>生命周期长，随时可用</td>
+<td>内存大小编译期确定，不可控；过多使用全局变量会提高耦合度；多线程环境下需要同步机制保证安全</td>
+</tr>
+<tr>
+<td>栈内存</td>
+<td>局部变量、函数参数、函数调用上下文自动分配释放</td>
+<td>与函数周期一致</td>
+<td>效率极快，适合较小数据</td>
+<td>栈内存一般较小，存储较大数据可能导致栈溢出</td>
+</tr>
+</tbody>
+</table>
+<h4 id="最少知识原则">1.3.2 最少知识原则</h4>
+<p>类的内部数据不管多复杂，都不能直接传递给使用者，只能通过公有方法间接访问。</p>
+<p>因此，在类的封装、继承和多态实现中，可以提供公有方法读取内部数据，而不是直接暴露内部结构。</p>
+<hr />
+<h2 id="第二章抽象接口">第二章：抽象接口</h2>
+<h3 id="抽象接口的概念">2.1 抽象接口的概念</h3>
+<p><strong>抽象接口
+interface</strong>：一种抽象功能接口。使用者只负责调用接口，无需知道接口内部的数据定义和功能实现方式。</p>
+<p>在 C 语言中，可以通过函数指针实现抽象接口。</p>
+<h3 id="传统过程式写法">2.2 传统过程式写法</h3>
+<p>以录波文件保存功能为例，传统写法通常根据格式直接调用不同函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (format == <span class="string">&#x27;binary&#x27;</span>) &#123;</span><br><span class="line">    create_dat_file_bin(data, filename);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (format == <span class="string">&#x27;ascii&#x27;</span>) &#123;</span><br><span class="line">    create_dat_file_asc(data, filename);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">process_wave_data(data);</span><br></pre></td></tr></table></figure>
+<p>这种写法的问题是：主程序直接依赖具体实现，后续扩展新的文件格式时容易改动主流程。</p>
+<h3 id="接口式写法">2.3 接口式写法</h3>
+<p>面向接口的设计可以将具体实现隐藏在抽象层之后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">    class DataFileCreator &#123;</span><br><span class="line">        &lt;&lt;interface&gt;&gt;</span><br><span class="line">        +createFile(WaveData, string) int</span><br><span class="line">        +writeHeader() void</span><br><span class="line">        +writeData() void</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class BinaryFileCreator &#123;</span><br><span class="line">        +createFile(WaveData, string) int</span><br><span class="line">        +writeBinaryHeader() void</span><br><span class="line">        +writeBinaryData() void</span><br><span class="line">        +calculateChecksum() long</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class AsciiFileCreator &#123;</span><br><span class="line">        +createFile(WaveData, string) int</span><br><span class="line">        +writeAsciiHeader() void</span><br><span class="line">        +writeAsciiData() void</span><br><span class="line">        +formatScientificNotation() string</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class CompressedFileCreator &#123;</span><br><span class="line">        +createFile(WaveData, string) int</span><br><span class="line">        +compressData() byte[]</span><br><span class="line">        +writeCompressedHeader() void</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class FileCreatorFactory &#123;</span><br><span class="line">        &lt;&lt;Factory&gt;&gt;</span><br><span class="line">        +createCreator(string) DataFileCreator</span><br><span class="line">        +getSupportedFormats() string[]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class WaveDataProcessor &#123;</span><br><span class="line">        +processData(DataFileCreator) void</span><br><span class="line">        +validateData() boolean</span><br><span class="line">        +transformData() WaveData</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    DataFileCreator &lt;|.. BinaryFileCreator</span><br><span class="line">    DataFileCreator &lt;|.. AsciiFileCreator</span><br><span class="line">    DataFileCreator &lt;|.. CompressedFileCreator</span><br><span class="line">    FileCreatorFactory ..&gt; DataFileCreator : 创建</span><br><span class="line">    WaveDataProcessor --&gt; DataFileCreator : 使用</span><br></pre></td></tr></table></figure>
+<p>调用方只依赖抽象接口：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DataFileCreator creator = factory.createCreator(format);</span><br><span class="line">creator.createFile(data, filename);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用方无需知道具体实现类型</span></span><br></pre></td></tr></table></figure>
+<h3 id="依赖注入">2.4 依赖注入</h3>
+<p><strong>依赖注入</strong>：向某个对象提供它所需要的其他对象。常见方式包括构造注入和方法注入。</p>
+<h4 id="构造注入">构造注入</h4>
+<p>通过初始化函数完成依赖对象注入，初始化通常只调用一次。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">class_a_xxx_init</span><span class="params">(<span class="keyword">struct</span> class_a_xxx *p_this, ..., <span class="keyword">struct</span> class_b_xxx something)</span> &#123;</span><br><span class="line">    p_this-&gt;something = something;  <span class="comment">// 将 b 类中的对象传入 a 类中</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方法注入">方法注入</h4>
+<p>通过某个非初始化函数注入依赖对象，可以多次调用，用于动态切换依赖对象。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">elec_watch_time_set</span><span class="params">(<span class="keyword">struct</span> elec_watch *p_this, <span class="keyword">struct</span> itime *itime)</span> &#123;</span><br><span class="line">    p_this-&gt;itime = itime;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="两种注入方式的区别">两种注入方式的区别</h4>
+<ul>
+<li>相同点：都是通过函数将依赖对象传入。</li>
+<li>不同点：
+<ul>
+<li>联系极其紧密、初始化时必须操作依赖对象、依赖对象长期存在且不变化时，适合构造注入。</li>
+<li>依赖对象需要动态切换时，适合方法注入。</li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="第三章依赖反转">第三章：依赖反转</h2>
+<h3 id="传统函数调用思路">3.1 传统函数调用思路</h3>
+<p>面向过程的函数调用方式中，高层模块经常直接依赖低层模块。</p>
+<p>以录波功能为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">    class WaveDataProcessor &#123;</span><br><span class="line">        +processAndSaveData()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class BinaryFileSaver &#123;</span><br><span class="line">        +saveAsBinary()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class AsciiFileSaver &#123;</span><br><span class="line">        +saveAsAscii()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    WaveDataProcessor --&gt; BinaryFileSaver : 直接依赖具体实现</span><br><span class="line">    WaveDataProcessor --&gt; AsciiFileSaver : 直接依赖具体实现</span><br></pre></td></tr></table></figure>
+<p>在这种结构中，<code>WaveDataProcessor</code> 的实现依赖
+<code>BinaryFileSaver</code> 和
+<code>AsciiFileSaver</code>。这种函数依赖多个下级函数的行为属于面向过程思路。</p>
+<h3 id="基于抽象接口的依赖反转">3.2 基于抽象接口的依赖反转</h3>
+<p>面向对象思路是在中间增加抽象接口，使高层模块只依赖抽象接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">    class WaveDataProcessor &#123;</span><br><span class="line">        +processAndSaveData(FileSaver saver)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class FileSaver &#123;</span><br><span class="line">        &lt;&lt;interface&gt;&gt;</span><br><span class="line">        +save(WaveData data) void</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class BinaryFileSaver &#123;</span><br><span class="line">        +save(WaveData data) void</span><br><span class="line">        +writeBinaryHeader() void</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class AsciiFileSaver &#123;</span><br><span class="line">        +save(WaveData data) void</span><br><span class="line">        +formatAsciiData() void</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class CompressedFileSaver &#123;</span><br><span class="line">        +save(WaveData data) void</span><br><span class="line">        +compressData() void</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    WaveDataProcessor --&gt; FileSaver : 依赖抽象接口</span><br><span class="line">    FileSaver &lt;|.. BinaryFileSaver</span><br><span class="line">    FileSaver &lt;|.. AsciiFileSaver</span><br><span class="line">    FileSaver &lt;|.. CompressedFileSaver</span><br></pre></td></tr></table></figure>
+<p>依赖反转的关键点是：高层模块不再依赖具体实现，而是依赖抽象接口。</p>
+<hr />
+<h2 id="第四章软件设计原则">第四章：软件设计原则</h2>
+<h3 id="solid-五大原则">4.1 SOLID 五大原则</h3>
+<h4 id="s单一职责原则">4.1.1 S：单一职责原则</h4>
+<p><strong>名词解释</strong>：一个类只能有一个引起它变化的原因。对于函数来说，就是一个函数或类只负责一个功能，不处理多项任务。</p>
+<p><strong>案例</strong>：录波二进制保存功能开发。</p>
+<p>原代码共计约 600
+行，将多个任务放在一起，造成功能糅合、界限不清、难以拆分。</p>
+<p>如果遵循单一职责原则，应将结构中的各项功能封装为独立函数，尤其是可复用功能，例如：</p>
+<ul>
+<li>打开并创建文件；</li>
+<li>检查路径；</li>
+<li>检查文件句柄；</li>
+<li>数据异常检查；</li>
+<li>数据读取；</li>
+<li>数据写入。</li>
+</ul>
+<p>如果在此基础上增加二进制保存功能，最彻底的办法是重构代码并拆分职责；最保守的办法是使用抽象接口处理写入逻辑。</p>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>单一职责原则不一定完全遵守，因为职责边界并不总是容易划分。</li>
+<li>对老代码的修改可能与其他原则冲突，例如开闭原则要求不修改老代码。</li>
+<li>实际工程中需要在可维护性、改动风险和开发成本之间取舍。</li>
+</ul>
+<h4 id="o开闭原则">4.1.2 O：开闭原则</h4>
+<p><strong>名词解释</strong>：软件实体应对扩展开放，对修改关闭。也就是尽量不修改老代码，而是通过扩展新函数实现新功能。</p>
+<p>录波 ASCII 保存函数示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码原文参照 linux 源码 EdpComtrade.cpp 文件</span></span><br><span class="line"><span class="type">static</span> BOOL <span class="title function_">create_dat_file</span><span class="params">(<span class="type">char</span> *pFileName, WAVE_INFO *pWaveInfo, <span class="type">int</span> *pSampleLastDot, <span class="type">int</span> cpucode)</span> &#123;</span><br><span class="line">    <span class="comment">// 变量初始化</span></span><br><span class="line">    <span class="comment">// 数据异常检查</span></span><br><span class="line">    <span class="comment">// 打开并创建文件</span></span><br><span class="line">    <span class="comment">// 录波段循环</span></span><br><span class="line">        <span class="comment">// 延拓数据获取</span></span><br><span class="line">        <span class="comment">// 延拓数据 ASCII 写入</span></span><br><span class="line">        <span class="comment">// 实际数据读取</span></span><br><span class="line">        <span class="comment">// 实际数据 ASCII 写入</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要满足开闭原则，就不能修改原 <code>create_dat_file</code>
+函数，而是另建一个二进制函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> BOOL <span class="title function_">create_dat_fileBIN</span><span class="params">(<span class="type">char</span> *pFileName, WAVE_INFO *pWaveInfo, <span class="type">int</span> *pSampleLastDot, <span class="type">int</span> cpucode)</span> &#123;</span><br><span class="line">    <span class="comment">// 变量初始化</span></span><br><span class="line">    <span class="comment">// 数据异常检查</span></span><br><span class="line">    <span class="comment">// 打开并创建文件</span></span><br><span class="line">    <span class="comment">// 录波段循环</span></span><br><span class="line">        <span class="comment">// 延拓数据获取</span></span><br><span class="line">        <span class="comment">// 延拓数据 BIN 写入</span></span><br><span class="line">        <span class="comment">// 实际数据读取</span></span><br><span class="line">        <span class="comment">// 实际数据 BIN 写入</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样会带来代码重复问题，因为很多流程相同，仅写入逻辑不同。</p>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>开闭原则不一定完全遵守。</li>
+<li>对老代码不轻易改动，但当重复度极高时，可以考虑重构。</li>
+<li>对新代码，应尽量预留扩展能力。</li>
+</ul>
+<h4 id="l里氏替换原则">4.1.3 L：里氏替换原则</h4>
+<p><strong>名词解释</strong>：派生类必须能够替换基类。</p>
+<p>即父类对象替换为子类对象后，程序仍能正常运行。子类应包含父类相同的属性和方法，并保持行为兼容。</p>
+<h4 id="i接口隔离原则">4.1.4 I：接口隔离原则</h4>
+<p><strong>名词解释</strong>：不应该强制客户端依赖它们不使用的接口。</p>
+<p>对于函数来说，如果函数只使用结构体极少数字段，却被迫传入完整结构体，就是接口隔离原则的反面案例。</p>
+<p>通常可以通过抽象接口分离不同类、函数或对象之间的依赖。</p>
+<h4 id="d依赖反转原则">4.1.5 D：依赖反转原则</h4>
+<p><strong>名词解释</strong>：高层模块不应该依赖低层模块，二者都应该依赖抽象。</p>
+<p>以录波保存为例，原函数依赖 ASCII 写入函数，不利于插入 BIN
+写入函数。因此可以定义写入函数指针，根据初始化条件确定函数指针指向。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义各写入函数的函数指针</span></span><br><span class="line"><span class="comment">// 定义 ASCII 写入函数和 BIN 写入函数</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> BOOL <span class="title function_">create_dat_file</span><span class="params">(<span class="type">char</span> *pFileName, WAVE_INFO *pWaveInfo, <span class="type">int</span> *pSampleLastDot, <span class="type">int</span> cpucode)</span> &#123;</span><br><span class="line">    <span class="comment">// 变量初始化</span></span><br><span class="line">    <span class="comment">// 数据异常检查</span></span><br><span class="line">    <span class="comment">// 初始化函数指针，确定 ASCII 或 BIN</span></span><br><span class="line">    <span class="comment">// 打开文件</span></span><br><span class="line">    <span class="comment">// 录波段循环</span></span><br><span class="line">        <span class="comment">// 延拓数据获取</span></span><br><span class="line">        <span class="comment">// 延拓数据写入函数 - 函数指针</span></span><br><span class="line">        <span class="comment">// 实际数据读取</span></span><br><span class="line">        <span class="comment">// 实际数据写入函数 - 函数指针</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式：</p>
+<ul>
+<li>相比单一职责原则，不用大规模重构原代码；</li>
+<li>相比完全遵守开闭原则，不会出现大量重复代码；</li>
+<li>虽然同时违反部分开闭原则和单一职责原则，但改动成本更低。</li>
+</ul>
+<blockquote>
+<p>原则不是天条。实际工程中更重要的是在冲突之间选择合适方案。</p>
+</blockquote>
+<h3 id="七大耦合由强到弱">4.2 七大耦合：由强到弱</h3>
+<h4 id="内容耦合">4.2.1 内容耦合</h4>
+<p><strong>名词解释</strong>：模块直接访问另一个模块的内部数据或指令。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 内容耦合</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> moduleB_internal_counter;  <span class="comment">// 直接访问 B 模块内部变量</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">moduleA_function</span><span class="params">()</span> &#123;</span><br><span class="line">    moduleB_internal_counter++;       <span class="comment">// 直接修改 B 模块内部状态</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="公共耦合">4.2.2 公共耦合</h4>
+<p><strong>名词解释</strong>：多个模块访问同一个全局数据区。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 公共耦合</span></span><br><span class="line"><span class="type">int</span> global_config;</span><br><span class="line"><span class="type">char</span> global_buffer[<span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">moduleA</span><span class="params">()</span> &#123;</span><br><span class="line">    global_config = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">moduleB</span><span class="params">()</span> &#123;</span><br><span class="line">    global_config = <span class="number">2</span>;  <span class="comment">// 可能引起冲突</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="外部耦合">4.2.3 外部耦合</h4>
+<p><strong>名词解释</strong>：模块访问同一个外部定义的数据格式、通信协议等。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> type;       <span class="comment">// 外部定义的格式</span></span><br><span class="line">    <span class="type">char</span> data[<span class="number">100</span>];</span><br><span class="line">&#125; ExternalFormat;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">processA</span><span class="params">(ExternalFormat *ext)</span> &#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">processB</span><span class="params">(ExternalFormat *ext)</span> &#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="控制耦合">4.2.4 控制耦合</h4>
+<p><strong>名词解释</strong>：一个模块通过传递控制信息来控制另一个模块的行为。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 控制耦合</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">processData</span><span class="params">(<span class="type">int</span> *data, <span class="type">int</span> control_flag)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (control_flag == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 执行算法 A</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (control_flag == <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="comment">// 执行算法 B</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用者控制了内部行为</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="标记耦合">4.2.5 标记耦合</h4>
+<p><strong>名词解释</strong>：模块间传递数据结构，但只使用其中部分字段。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">char</span> name[<span class="number">50</span>];</span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line">    <span class="type">double</span> salary;</span><br><span class="line">    <span class="type">char</span> email[<span class="number">100</span>];</span><br><span class="line">&#125; Employee;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">printName</span><span class="params">(Employee emp)</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, emp.name);  <span class="comment">// 只使用 name 字段</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="数据耦合">4.2.6 数据耦合</h4>
+<p><strong>名词解释</strong>：模块间只传递简单数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ✅ 数据耦合：只传递需要的数据</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">double</span> <span class="title function_">calculateArea</span><span class="params">(<span class="type">double</span> radius)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3.14</span> * radius * radius;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="无直接耦合">4.2.7 无直接耦合</h4>
+<p><strong>名词解释</strong>：模块之间完全独立，通过参数列表或外部调度者交换信息。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ========== 模块 A：温度传感器 ==========</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> sensorId;</span><br><span class="line">    <span class="type">double</span> temperature;</span><br><span class="line">    <span class="type">time_t</span> timestamp;</span><br><span class="line">&#125; TemperatureReading;</span><br><span class="line"></span><br><span class="line">TemperatureReading <span class="title function_">readTemperature</span><span class="params">(<span class="type">int</span> sensorId)</span> &#123;</span><br><span class="line">    TemperatureReading reading;</span><br><span class="line"></span><br><span class="line">    reading.sensorId = sensorId;</span><br><span class="line">    reading.temperature = <span class="number">25.5</span> + (rand() % <span class="number">100</span>) / <span class="number">10.0</span>;</span><br><span class="line">    reading.timestamp = time(<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> reading;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ========== 模块 B：日志记录器 ==========</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">logMessage</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *message)</span> &#123;</span><br><span class="line">    FILE *logFile = fopen(<span class="string">&quot;system.log&quot;</span>, <span class="string">&quot;a&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (logFile) &#123;</span><br><span class="line">        <span class="type">time_t</span> now = time(<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">fprintf</span>(logFile, <span class="string">&quot;[%s] %s\n&quot;</span>, ctime(&amp;now), message);</span><br><span class="line">        fclose(logFile);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">logTemperature</span><span class="params">(<span class="type">double</span> temp, <span class="type">int</span> sensorId)</span> &#123;</span><br><span class="line">    <span class="type">char</span> buffer[<span class="number">256</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">snprintf</span>(buffer, <span class="keyword">sizeof</span>(buffer),</span><br><span class="line">             <span class="string">&quot;Sensor %d: Temperature = %.1f°C&quot;</span>, sensorId, temp);</span><br><span class="line"></span><br><span class="line">    logMessage(buffer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ========== 模块 C：报警处理器 ==========</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">triggerAlarm</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *reason)</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ALARM: %s\n&quot;</span>, reason);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">checkTemperatureAlarm</span><span class="params">(<span class="type">double</span> temperature, <span class="type">int</span> sensorId)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (temperature &gt; <span class="number">80.0</span>) &#123;</span><br><span class="line">        <span class="type">char</span> buffer[<span class="number">256</span>];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">snprintf</span>(buffer, <span class="keyword">sizeof</span>(buffer),</span><br><span class="line">                 <span class="string">&quot;High temperature detected on sensor %d: %.1f°C&quot;</span>,</span><br><span class="line">                 sensorId, temperature);</span><br><span class="line"></span><br><span class="line">        triggerAlarm(buffer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ========== 外部调度者：系统控制器 ==========</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;temperature_sensor.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;logger.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;alarm_handler.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">systemMainLoop</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;系统启动，开始监控...\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        <span class="comment">// 1. 读取传感器</span></span><br><span class="line">        TemperatureReading reading = readTemperature(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 记录日志</span></span><br><span class="line">        logTemperature(reading.temperature, reading.sensorId);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 检查报警</span></span><br><span class="line">        checkTemperatureAlarm(reading.temperature, reading.sensorId);</span><br><span class="line"></span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    systemMainLoop();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr />
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a
+target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享
+4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/posts/document_style/">配置文件常见格式及其用途(Edit by HNU BJB)</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/FundamentalsOfDeepLearning/">深度学习网络结构基础(Edit by HNU BJB)</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Jiabing-Bao</a> 使用 <a
+target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar
+1.33.1</a> 主题创建。 本博客所有文章除特别声明外，均采用 <a
+target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA
+4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B"><span class="toc-text">第一章：面向对象编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">1.1 基础概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="toc-text">1.2 三大特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-text">1.2.1 封装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-text">1.2.2 继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E6%80%81"><span class="toc-text">1.2.3 多态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A8%8B%E5%8E%9F%E5%88%99"><span class="toc-text">1.3 基本编程原则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D-%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA"><span class="toc-text">1.3.1 内存分配 &#x2F; 对象创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E5%B0%91%E7%9F%A5%E8%AF%86%E5%8E%9F%E5%88%99"><span class="toc-text">1.3.2 最少知识原则</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0%E6%8A%BD%E8%B1%A1%E6%8E%A5%E5%8F%A3"><span class="toc-text">第二章：抽象接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">2.1 抽象接口的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E8%BF%87%E7%A8%8B%E5%BC%8F%E5%86%99%E6%B3%95"><span class="toc-text">2.2 传统过程式写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%BC%8F%E5%86%99%E6%B3%95"><span class="toc-text">2.3 接口式写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">2.4 依赖注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%B3%A8%E5%85%A5"><span class="toc-text">构造注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5"><span class="toc-text">方法注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">两种注入方式的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%BE%9D%E8%B5%96%E5%8F%8D%E8%BD%AC"><span class="toc-text">第三章：依赖反转</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%80%9D%E8%B7%AF"><span class="toc-text">3.1 传统函数调用思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%8A%BD%E8%B1%A1%E6%8E%A5%E5%8F%A3%E7%9A%84%E4%BE%9D%E8%B5%96%E5%8F%8D%E8%BD%AC"><span class="toc-text">3.2 基于抽象接口的依赖反转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-text">第四章：软件设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#solid-%E4%BA%94%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="toc-text">4.1 SOLID 五大原则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#s%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99"><span class="toc-text">4.1.1 S：单一职责原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#o%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99"><span class="toc-text">4.1.2 O：开闭原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#l%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99"><span class="toc-text">4.1.3 L：里氏替换原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#i%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99"><span class="toc-text">4.1.4 I：接口隔离原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d%E4%BE%9D%E8%B5%96%E5%8F%8D%E8%BD%AC%E5%8E%9F%E5%88%99"><span class="toc-text">4.1.5 D：依赖反转原则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E5%A4%A7%E8%80%A6%E5%90%88%E7%94%B1%E5%BC%BA%E5%88%B0%E5%BC%B1"><span class="toc-text">4.2 七大耦合：由强到弱</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E8%80%A6%E5%90%88"><span class="toc-text">4.2.1 内容耦合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%AC%E5%85%B1%E8%80%A6%E5%90%88"><span class="toc-text">4.2.2 公共耦合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E8%80%A6%E5%90%88"><span class="toc-text">4.2.3 外部耦合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E8%80%A6%E5%90%88"><span class="toc-text">4.2.4 控制耦合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E8%80%A6%E5%90%88"><span class="toc-text">4.2.5 标记耦合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%80%A6%E5%90%88"><span class="toc-text">4.2.6 数据耦合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E7%9B%B4%E6%8E%A5%E8%80%A6%E5%90%88"><span class="toc-text">4.2.7 无直接耦合</span></a></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"codeblock":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
