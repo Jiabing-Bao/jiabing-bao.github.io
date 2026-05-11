@@ -1,0 +1,59 @@
+/* ========== 一级标题框（最醒目） ========== */
+h1 {
+  background-color: #eef5ff !important; /* 淡蓝色背景，和页面区分 */
+  padding: 14px 22px !important;
+  border-radius: 10px !important;
+  font-size: 1.6em !important;
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+  margin: 1.8em 0 1em 0 !important;
+  border-left: 6px solid #165DFF !important; /* 左边粗彩条，非常明显 */
+  border-right: 6px solid #165DFF !important;
+}
+
+/* 暗色模式 */
+[data-theme="dark"] h1 {
+  background-color: #1e293b !important;
+  color: #f0f9ff !important;
+  border-left-color: #3b82f6 !important;
+  border-right-color: #3b82f6 !important;
+}
+
+/* ========== 二级标题框（清晰区分层级） ========== */
+h2 {
+  background-color: #f0fdf4 !important; /* 淡绿色背景 */
+  padding: 12px 20px !important;
+  border-radius: 8px !important;
+  font-size: 1.4em !important;
+  font-weight: 500 !important;
+  color: #1f2937 !important;
+  margin: 1.5em 0 0.8em 0 !important;
+  border-left: 5px solid #059669 !important;
+  border-right: 5px solid #059669 !important;
+}
+
+/* 暗色模式 */
+[data-theme="dark"] h2 {
+  background-color: #1f2937 !important;
+  color: #ecfdf5 !important;
+  border-left-color: #10b981 !important;
+  border-right-color: #10b981 !important;
+}
+
+/* ========== 三级标题框 ========== */
+h3 {
+  background-color: #fffbeb !important; /* 淡黄色背景 */
+  padding: 10px 18px !important;
+  border-radius: 6px !important;
+  font-size: 1.2em !important;
+  color: #1f2937 !important;
+  border-left: 4px solid #d97706 !important;
+  border-right: 4px solid #d97706 !important;
+}
+
+[data-theme="dark"] h3 {
+  background-color: #292521 !important;
+  color: #fffbeb !important;
+  border-left-color: #f59e0b !important;
+  border-right-color: #f59e0b !important;
+}
